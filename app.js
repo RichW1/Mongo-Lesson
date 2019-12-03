@@ -2,6 +2,7 @@
 const express = require('express');
 const mongoose = require(`mongoose`);
 const products = require(`./Routes/Product.Routes`);
+const providers = require(`./routes/ProductProvider.Routes`);
 
 // Set our global constant stuff here
 const apiPort = 3444;
@@ -9,12 +10,13 @@ const dbName = `db1`;
 const dbPort = 27017;
 const dbUrl = `mongodb://localhost:${dbPort}/${dbName}`;
 
-// Create out app and clients and whatnots...
+// Create our app and clients and whatnots...
 const api = express();
 
 // Tell our apps and clients and whatnot to use stuff... (middleware)
 api.use(express.json());
 api.use(`/products`, products);
+api.use(`/product-providers`, providers);
 
 mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = global.Promise;

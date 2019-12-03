@@ -7,13 +7,8 @@ exports.test = function(req, res, next)
 
 exports.create = function(req, res, next) 
 {
-    const product = new Product(
-        {
-            name: req.body.name,
-            description: req.body.description,
-            price: req.body.price,
-        }
-    );
+    const product = new Product(req.body);
+    
     product.save((err, result) => {
         if (err) 
         {
@@ -35,6 +30,21 @@ exports.getProducts = function(req, res, next)
         res.send(results);
     });
 }
+
+exports.getProductById = function(req, res, next) 
+{
+    const query = {
+        _id: req.params.id
+    };
+    Product.find(query, (err, results) => {
+        if (err)
+        {
+            return next (err);
+        }
+        console.log(`getProductsById results: `, results);
+        res.send(results);
+    });
+};
 
 exports.updateProduct = function(req, res, next) 
 {
